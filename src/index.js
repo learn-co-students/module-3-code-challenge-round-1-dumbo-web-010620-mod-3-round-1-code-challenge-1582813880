@@ -21,7 +21,7 @@ const getTheatres =  () => {
          ${showingObject.film.runtime}
          </div>
          <div class="description" data-set="${showingObject.id}">
-             ${showingObject.tickets_sold} remaining tickets
+             ${showingObject.capacity - showingObject.tickets_sold} remaining tickets
         </div>
         <span class="ui label">
           ${showingObject.showtime}
@@ -35,6 +35,7 @@ const getTheatres =  () => {
           buttonDiv.className = "ui blue button"
           buttonDiv.setAttribute('data-id', `${showingObject.id}`)
           buttonDiv.innerText = "Buy Ticket"
+            
           divExtraContent.append(buttonDiv)
         //   <div class="ui blue button" data-id="${showingObject.id}">Buy Ticket</div>
 
@@ -44,12 +45,34 @@ const getTheatres =  () => {
 
           buttonDiv.addEventListener('click', (e) => {
               const getRemainingTickets = document.querySelector('.description')
-              fetch()
-              
+              fetch('https://evening-plateau-54365.herokuapp.com/tickets', {
+                method: 'POST', // or 'PUT'
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                   showing_id: `${showingObject.id}`
+                }),
+              }).then(res => res.json())
+              .then(newTicket => decrementValueToFetch(newTicket))
+
+              })
+              const decrementValueToFetch = (newTicket) => {
+                console.log(showingObject) 
+                console.log(newTicket)
+                if (showingObject.tickets_sold === 20) {
+                    buttonDiv.remove()
+                    const createSoldOut = document.createElement('div')
+                    createSoldOut.innerText = "Sold Out"
+                    createSoldOut.style.color = 'grey'
+                    divExtraContent.append(createSoldOut)
+
+                } 
+              }
           })
        });
-   })
-}
+   }
 
 
 getTheatres()
