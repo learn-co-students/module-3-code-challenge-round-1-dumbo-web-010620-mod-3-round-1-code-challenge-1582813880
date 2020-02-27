@@ -17,87 +17,69 @@ const renderShow = (show) => {
     const divHeader = document.createElement("div")
     const divMeta = document.createElement("div")
     const divDescription = document.createElement("div")
-    
     const uiLabel = document.createElement("span")
-    const divMeta = document.createElement("div")
+    const extraContent = document.createElement("div")
+    const blueBtn = document.createElement("div")
 
-    
-    divContent.className = "content"
-
-    divHeader.className = "header"
-    divHeader.textContent = show.film.title
-
-    divMeta.className = "meta"
-    divMeta.textContent = `${show.film.runtime} minutes`
     let capacity = show.capacity
     let ticketsSold = show.tickets_sold
-    eachCard.dataset.id = show.id
+
+    let remainingTix = capacity - ticketsSold
+    uiLabel.className = "ui label"
+    divContent.className = "content"
+    divHeader.className = "header"
+    extraContent.className = "extra content"
+    blueBtn.className = "ui blue button"
+    divMeta.className = "meta"
+    divDescription.className = "description"
+
+    divHeader.textContent = show.film.title
+    divMeta.textContent = `${show.film.runtime} minutes`
+    divDescription.textContent = `${remainingTix} remaining tickets`
+    uiLabel.textContent = show.showtime
+    blueBtn.textContent = "Buy Ticket"
+
+    blueBtn.dataset.id = show.id
     eachCard.className = "card"
 
+    divContent.append(divHeader, divMeta, divDescription, uiLabel) // film title inside the content.
+    extraContent.appendChild(blueBtn)
 
-    eachCard.innerHTML = `
-    <div class="content">
-        <div class="header">
-            ${show.film.title}
-        </div>
-    <div class="meta">
-      ${show.film.runtime} minutes
-    </div>
-    <div class="description">
-      ${capacity - ticketsSold} remaining tickets
-    </div>
-    <span class="ui label">
-      ${show.showtime}
-    </span>
-  </div>
-  <div class="extra content">
-    <div class="ui blue button">Buy Ticket</div>
-  </div>`
-
+    eachCard.append(divContent, extraContent)
     cardContainer.appendChild(eachCard)
-    const blueBtn = document.querySelector(".button")
-    console.log(blueBtn)
     
-
-    //handler
-    // const createNewTicket = () => {
-    //     return fetch("https://evening-plateau-54365.herokuapp.com/tickets", {
-    //         method: "POST", 
-    //         headers: {
-    //             "Content-Type" : "application/json",
-    //             "Accept" : "application/json"
-    //         }
-    //         body: JSON.stringify({
-    //             showing_id: eachCard.dataset.id
-    //         })
-    //     })
-    //     .then(r => r.json())
-    // }
-
-
-    const subtractOnClickHandler = (e) =>{
+    blueBtn.addEventListener("click", (e) => {
         e.preventDefault()
-        console.log(e)
-        console.log("you clicked me")
-        // if ((capacity - ticketsSold) > 0){
-        //     createNewTicket()
 
-        //     ticketsSold += 1
-        //     remainingTix.textContent = `${capacity - ticketsSold} remaining tickets`
-        // } else {
-        //     ticketsSold += 1
-        //     remainingTix.textContent = `${capacity - ticketsSold} remaining tickets`
-        //     buyTicket.textContent = "Sold Out"
-        // }
-    }
+        const createNewTicket = () =>{
+            showing_id: e.target.dataset.id
+        }
 
-
-    // Event Listeners
-    blueBtn.addEventListener("click", subtractOnClickHandler)
-
-
+        if (remainingTix > 0){
+            return fetch("https://evening-plateau-54365.herokuapp.com/tickets", {
+                method: "POST", 
+                headers: {
+                    "Content-Type" : "application/json",
+                    "Accept" : "application/json"
+                },
+                body: JSON.stringify(createNewTicket)
+            })
+            .then(r => console.log(r.json())
+        } else {
+            return fetch("https://evening-plateau-54365.herokuapp.com/tickets", {
+                method: "POST", 
+                headers: {
+                    "Content-Type" : "application/json",
+                    "Accept" : "application/json"
+                },
+                body: JSON.stringify({
+                    error: "That showing is sold out"
+                })
+            })
+            blueBtn.textContent = "Sold Out"
+        }
+    })
 }
-
 
 
 // Fetch
