@@ -152,7 +152,7 @@ Example response:
 
 A theatre has many showings.
 
-The number of tickets remaining for a showing can be determined by subtracting the current `tickets_sold` from the total `capacity` of the showing.
+<!-- The number of tickets remaining for a showing can be determined by subtracting the current `tickets_sold` from the total `capacity` of the showing. -->
 
 
 #### POST `/tickets`
