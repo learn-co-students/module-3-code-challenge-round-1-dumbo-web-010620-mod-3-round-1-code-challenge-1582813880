@@ -36,6 +36,7 @@ function renderShowings(){
             let divDescription = document.createElement('div')
             divDescription.className = 'description'
             ticketsLeft = show.capacity - show.tickets_sold
+
             divDescription.innerText = ticketsLeft + ' remaining tickets'
             divContent.append(divDescription)
 
@@ -52,23 +53,39 @@ function renderShowings(){
             let divButton = document.createElement('div')
             divButton.className = 'ui blue button'
             divButton.innerText = 'Buy Ticket'
+            soldOut(show,divButton)
             divXcontent.append(divButton)
+
 
 
 
             showingDiv.appendChild(divCard)
 
+//--------------------end of DOM set-up-----------------------
+
+
             divButton.addEventListener('click', event => {
-                buyTicket(show,ticketsLeft)
+                buyTicket(show)
                 divDescription.innerText = ""
-                ticketsLeft -= 1
-                divDescription.innerText = ticketsLeft + ' remaining tickets'
-                })
+                divButton.innerText = ""
+
+                if (show.capacity === show.tickets_sold){
+                divDescription.innerText = show.capacity - show.tickets_sold + ' remaining tickets'
+                soldOut(show,divButton)
+                divButton.className = 'disabled'}
+                else{
+                    show.capacity -= 1
+                    divDescription.innerText = show.capacity - show.tickets_sold + ' remaining tickets' 
+                    divButton.innerText = 'Buy Ticket'}
+                    
+                
+             })
         })
     })
-}
 
-function buyTicket(show,ticketsLeft){
+}//-----------------end of renderShowings-------------------------------------
+
+function buyTicket(show){
 
     ticketObj={showing_id: show.id}
     fetch("https://evening-plateau-54365.herokuapp.com/tickets",{
@@ -83,12 +100,11 @@ function buyTicket(show,ticketsLeft){
 
 }
 
-function updateTicket(value){
-    let newValue = value
-    if (newValue > 0){
-    newValue -= 1
-    return newValue
-}}
+function soldOut(show,div){
+    if (show.capacity === show.tickets_sold){
+        div.innerText = 'Sold Out'
+        div.className = 'disabled'}
+}
 
 
 
