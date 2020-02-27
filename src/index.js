@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="description">
                     ${ticketsRemaining} remaining tickets
                 </div>
-                    <span class="ui label">
+                    <span class="ui-label">
                         ${show.showtime}
                     </span>
                 </div>
