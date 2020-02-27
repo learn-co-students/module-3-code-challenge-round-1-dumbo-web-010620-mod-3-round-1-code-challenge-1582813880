@@ -1,10 +1,11 @@
 const theatreId = 151
+
 document.addEventListener("DOMContentLoaded", event => {
     event.preventDefault()
 //step 1 - render one showing
 const showingList = document.querySelector(".showings")
 function renderShowing(showing) {
-    const newDiv = document.createElement("div") 
+    const newDiv = document.createElement("div")
     newDiv.innerHTML = `
     <div class="card">
         <div class="content">
@@ -26,7 +27,7 @@ function renderShowing(showing) {
         </div>
     </div
     `
-    showingList.appendChild(newDiv)
+    showingList.append(newDiv)
 
     const buyBtn = newDiv.querySelector(".button")
     const counter = newDiv.querySelector(".description")
@@ -61,6 +62,8 @@ fetch("https://evening-plateau-54365.herokuapp.com/theatres/151")
 
 })
 
+// step 5 create tickets and save to backend 
+// --- helper function --- 
 
 function newTicket(showing_id) {
     fetch("https://evening-plateau-54365.herokuapp.com/tickets", {
