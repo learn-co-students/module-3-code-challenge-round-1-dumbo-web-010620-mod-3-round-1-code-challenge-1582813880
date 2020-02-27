@@ -4,7 +4,7 @@
 //
 // [X] As a user, when the page loads I should see a list of movie showings fetched from a remote API.
 //
-// As a user, clicking on the 'Buy Ticket' button should purchase a ticket and
+// [X]As a user, clicking on the 'Buy Ticket' button should purchase a ticket and
 // decrement the remaining tickets by one. This information should be persisted
 // in the remote API.
 //
@@ -24,7 +24,6 @@ const decrementTickets = (showingDiv, ticketsRemaining) => {
 }
 const renderSingleShowing = (showingObj) => {
   const newShowingDiv = document.createElement("div")
-  const extraDiv = newShowingDiv.querySelector(".extra-content")
   newShowingDiv.className = "card"
   showingsDiv.append(newShowingDiv)
 
@@ -51,35 +50,35 @@ const renderSingleShowing = (showingObj) => {
   `
 
 
-  buyButton = newShowingDiv.querySelector(".ui.blue.button")
+  const extraDiv = newShowingDiv.querySelector(".extra.content")
 
   if (ticketsRemaining <= 0) {
-    buyButton.className = 'sold-out'
-    buyButton.textContent = "Sold Out"
+    extraDiv.innerHTML = `
+      <div class="ui blue button">Sold Out</div>
+    `
     return;
-  }
-
-  buyButton.addEventListener("click", (e) => {
-    fetch("https://evening-plateau-54365.herokuapp.com/tickets", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({showing_id: showingObj.id })
+  } else {
+    buyButton = newShowingDiv.querySelector(".ui.blue.button")
+    buyButton.addEventListener("click", (e) => {
+      fetch("https://evening-plateau-54365.herokuapp.com/tickets", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({showing_id: showingObj.id })
+      })
+      .then((res) => res.json())
+      .then(data => console.log(data))
+      // debugger
+      ticketsRemaining-=1
+      const remainingTickets = newShowingDiv.querySelector(".description")
+      remainingTickets.textContent = `${ticketsRemaining} remaining tickets`
+      decrementTickets(newShowingDiv, ticketsRemaining)
+      renderSingleShowing(showingObj)
+      // end of event
     })
-    .then((res) => res.json())
-    .then(data => console.log(data))
-    // debugger
-    ticketsRemaining-=1
-    const remainingTickets = newShowingDiv.querySelector(".description")
-    remainingTickets.textContent = `${ticketsRemaining} remaining tickets`
-    decrementTickets(newShowingDiv, ticketsRemaining)
-    renderSingleShowing(showingObj)
-    // end of event
-  })
-
-
+  }
 }
 const renderShowings = (theatreArray) => {
   theatreArray.showings.forEach((showing) => {
