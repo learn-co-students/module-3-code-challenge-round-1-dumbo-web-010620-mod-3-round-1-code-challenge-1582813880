@@ -20,40 +20,64 @@ getshowings().then(showings => showings.forEach(
         const showingLi = document.createElement('li') //will live
         const buyTicket = document.createElement('button')
         buyTicket.innerText = "Buy Ticket"
-        buyTicket.id = showing.id
-        
+        buyTicket.dataset.id = showing.id
         let currentTicketCount = showing.tickets_sold
-        
-        showingLi.innerHTML =
-        `
-        <div>
-        <h1>Title: ${showing.film.title}</h1>
-        <h2>Showtime: ${showing.showtime} </h2>
-        <h3>Runtime: ${showing.film.runtime}</h3>
-        <p>Tickets Sold: ${showing.tickets_sold}</p>
-        </div>
-        `
-        
-        showingLi.append(buyTicket)
-        buyTicket.addEventListener('click', (event) => {
+
+        buyTicket.addEventListener('onclick', (event) => {
             event.preventDefault();
-            console.log(showing.tickets_sold)
+            console.log('hi')
             
-        })
+            // if (currentTicketCount > 0){
+                //     currentTicketCount -= 1
+                // } else {
+                    //     return "You can't buy anymore"
+                    // }
+                    
+                })
+                
+                showingLi.innerHTML =
+                `
+                <div>
+                <h1>Title: ${showing.film.title}</h1>
+                <h2>Showtime: ${showing.showtime} </h2>
+                <h3>Runtime: ${showing.film.runtime}</h3>
+                <h3>Capacity: ${showing.capacity}</h3>
+                <p>Tickets Sold: ${currentTicketCount}</p>
+                </div>
+                `
+                
+                showingLi.append(buyTicket)
+                
+                showingsParent.append(showingLi)
+                
+                //we need to add an event listener to the buy tickets button
+           
+
+                fetch(`https://evening-plateau-54365.herokuapp.com/tickets`,  {
+                    method: 'POST',
+                       headers: {
+                           'Content-Type': "application/json",
+                           'Accept': "application/json"
+                       },
+                       body: JSON.stringify({showing_id: showing.id} )
+                   })
+                   .then(response => response.json())
+                   .then(console.log)
+
+                
+                
+            }
+            
+            //###################### end slap on the dom function ################
+            
+            
+            
+            
+            
         
-        showingsParent.append(showingLi)
         
-        //we need to add an event listener to the buy tickets button
-
-
-}
-
-//###################### end slap on the dom function ################
-
-
-
-
-
+        
+            //       
 
 //* As a user, clicking on the 'Buy Ticket' button should purchase a ticket and decrement the remaining tickets by one. This information should be persisted in the remote API.
 
