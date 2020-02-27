@@ -43,7 +43,7 @@ function createMovieCard(movie) {
 
     movieCard.innerHTML = 
     `
-    <div class="card" >
+    <div id ='movie-${movie["id"]}' class="card" >
     <div class="content">
       <div class="header">
         ${movie["film"]["title"]}
@@ -59,7 +59,7 @@ function createMovieCard(movie) {
       </span>
     </div>
     <div class="extra content">
-      <div id="${movie["id"]}-buy-ticket-button" class="ui blue button">Buy Ticket</div>
+      <div id="buy-ticket-button" class="ui blue button">Buy Ticket</div>
     </div>
     </div>
     <br>
@@ -67,8 +67,14 @@ function createMovieCard(movie) {
     `
     slapThatDOM(movieCard)
 
-    const myButton = document.querySelector(`#${movie["id"]}-buy-ticket-button`)
-    console.log(myButton)
+    const myButton = document.querySelector(`#movie-${movie["id"]} #buy-ticket-button`)
+    myButton.addEventListener("click", decrementTickets)
+
+
+
+
+
+
     // const me = document.querySelector(`#${movie["id"]}`)
     // console.log(me)
     // // const buyTicketButton = document.querySelector("#buy-ticket-button") // this might need to relocate
@@ -96,7 +102,22 @@ function slapThatDOM(movieCard) {
 // }
 
 function decrementTickets(event) {
-    console.log(event.target)
+    const movieDiv = event.target.parentNode.parentNode
+    console.log(movieDiv.id)
+    let remainingTicketsString = (movieDiv.children[0].children[2].innerText)
+    console.log(remainingTicketsString)
+    let remainingTicketsInt = parseInt(remainingTicketsString)
+    remainingTicketsInt--
+    movieDiv.children[0].children[2].innerText = `${remainingTicketsInt} remaining tickets`
+    console.log(movieDiv.children[0].children[2].innerText)
+    
+
+    // const movieCard = 
+    // let meh = movieDiv.querySelector(id^='movie-')
+    // console.log(meh)
+
+    // querySelector wildcard?
+
 }
 
 
