@@ -8,6 +8,7 @@ You will be building out an application that allows a user to purchase movie tic
 
 * As a user, when the page loads I should see a list of movie showings fetched from a remote API.
 
+
 * As a user, clicking on the 'Buy Ticket' button should purchase a ticket and decrement the remaining tickets by one. This information should be persisted in the remote API.
 
 * As a user I should not be able to purchase a ticket for a sold out showing. The 'Buy Ticket' button should be disabled on sold out showings, and the text should change to "sold out".
@@ -27,6 +28,8 @@ When you visit `https://evening-plateau-54365.herokuapp.com/` in your browser, y
 #### GET `/theatres/:id`
 
 Use your assigned id to get the data for all of the showings at your assigned theatre.
+* API for all of the showings 
+
 
 GET `https://evening-plateau-54365.herokuapp.com/theatres/:id`
 
@@ -154,8 +157,11 @@ A theatre has many showings.
 
 The number of tickets remaining for a showing can be determined by subtracting the current `tickets_sold` from the total `capacity` of the showing.
 
+* Tickets remaining - total capacity - tickets_sold
 
 #### POST `/tickets`
+
+*use body: (JSON.stringify)({showing_id: showObj.id})
 
 To create a new ticket it must belong to a showing. The body of the request must contain a key called  `showing_id`
 
