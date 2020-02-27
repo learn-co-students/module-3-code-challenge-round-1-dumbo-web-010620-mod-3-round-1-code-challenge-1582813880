@@ -6,7 +6,7 @@
 
 You will be building out an application that allows a user to purchase movie tickets.
 
-* As a user, when the page loads I should see a list of movie showings fetched from a remote API.
+<!-- * As a user, when the page loads I should see a list of movie showings fetched from a remote API. -->
 
 * As a user, clicking on the 'Buy Ticket' button should purchase a ticket and decrement the remaining tickets by one. This information should be persisted in the remote API.
 
@@ -22,7 +22,7 @@ There are two endpoints you will use, one to fetch all of the data associated wi
 
 When you visit `https://evening-plateau-54365.herokuapp.com/` in your browser, you'll be assigned a **unique id**
 
-**Before you do anything else, change the variable `theatreId` in your index.js file to your assigned id.**
+<!-- **Before you do anything else, change the variable `theatreId` in your index.js file to your assigned id.** -->
 
 #### GET `/theatres/:id`
 
