@@ -24,11 +24,11 @@ When you visit `https://evening-plateau-54365.herokuapp.com/` in your browser, y
 
 <!-- **Before you do anything else, change the variable `theatreId` in your index.js file to your assigned id.** -->
 
-#### GET `/theatres/:id`
+<!-- #### GET `/theatres/:id`
 
-Use your assigned id to get the data for all of the showings at your assigned theatre.
-
-GET `https://evening-plateau-54365.herokuapp.com/theatres/:id`
+Use your assigned id to get the data for all of the showings at your assigned theatre. -->
+<!-- 
+GET `https://evening-plateau-54365.herokuapp.com/theatres/:id` -->
 
 Example response:
 ```json
