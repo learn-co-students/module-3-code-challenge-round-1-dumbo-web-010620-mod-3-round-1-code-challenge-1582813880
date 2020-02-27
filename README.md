@@ -150,9 +150,9 @@ Example response:
 }
 ```
 
-A theatre has many showings.
+<!-- A theatre has many showings.
 
-The number of tickets remaining for a showing can be determined by subtracting the current `tickets_sold` from the total `capacity` of the showing.
+The number of tickets remaining for a showing can be determined by subtracting the current `tickets_sold` from the total `capacity` of the showing. -->
 
 
 #### POST `/tickets`
@@ -193,7 +193,7 @@ Example Responses:
 
 ### Styling
 
-[Semantic Ui](https://semantic-ui.com/elements/list.html) is loaded into this project via a `link` tag in the `head` of the html.
+<!-- [Semantic Ui](https://semantic-ui.com/elements/list.html) is loaded into this project via a `link` tag in the `head` of the html.
 
 The cards that represent a movie showing should be appended to the div with the class of  `showings`.  Each card should have the following html
 
@@ -216,7 +216,7 @@ The cards that represent a movie showing should be appended to the div with the 
   <div class="extra content">
     <div class="ui blue button">Buy Ticket</div>
   </div>
-</div>
+</div> -->
 ```
 
 ### Considerations
