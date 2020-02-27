@@ -56,8 +56,9 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(response => response.json())
             .then(result => {
-                show.tickets_sold += 1
-                renderOneCard(show)
+                const updatedShow = allShowings.find(show => show.id === result.showing_id)
+                updatedShow.tickets_sold += 1
+                renderAllCards(allShowings)
             })
         })
     }
